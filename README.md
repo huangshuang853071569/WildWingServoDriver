@@ -6,6 +6,7 @@
 
 基于STM32F103的位置式串级PID算法：将输入的PWM脉宽映射为一个电压值（0~5V）并做为期望值，将电位器采集到的电压作为当前值，经PID控制器输出给H-Bridge,进而控制直流电机转动到目标位置。
 
+![image](https://github.com/huangshuang853071569/WildWingServoDriver/blob/master/image/image_1.png)
 -------------------------------------------------------------------
 代码说明：
 
