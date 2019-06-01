@@ -37,6 +37,7 @@ float pid_control(float except,float current,float delta_T)
 
   /**----------------------------Extern Control----------------------------**/
 	err_ext	= exc_ext - obs_ext;					//求外环误差 
+	if(fabs(err_ext)<POS_DEAD)err_ext=0;			//死区
 	out_ext = err_ext * KP_EXT;						//求外环输出
   /**----------------------------------------------------------------------**/
   
@@ -53,7 +54,7 @@ float pid_control(float except,float current,float delta_T)
 	   ( (out_ins < PID_MIN)&&(err_ins < 0) ) )	 
 	{}
 	else 
-		integral_ins+=integral_ins;
+		integral_ins+=err_ins;
 	
 	#ifdef ENABLE_INTEGRAL_SEPARATING				//如果使能了积分分离
 	{
