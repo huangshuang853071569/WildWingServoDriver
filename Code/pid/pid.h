@@ -26,9 +26,10 @@
 #define KI_INS 0.5f
 #define KD_INS 2.0f
 
-#define PID_MAX 100			//积分上限
-#define PID_MIN -100		//积分下限
-#define ERR_TRD_INS 50		//积分分离的误差阈值
+#define PID_MAX 		100			//积分上限
+#define PID_MIN 		-100		//积分下限
+#define ERR_TRD_INS 	50			//积分分离的误差阈值
+#define	POS_DEAD 		150			//死区
 
 float pid_control(float except,float current,float delta_T);
 #endif
