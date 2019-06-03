@@ -4,7 +4,7 @@
 /**	Data	  : 2019/5/31										**/
 /**	Version	  : V1.0											**/
 /**-------------------------------------------------------------**/
-
+#include "usart.h"
 #include "pid.h"
 
 float err_ext;			//外环误差值
@@ -14,7 +14,7 @@ float out_ext;			//外环输出值
 float obs_ext_last;		//上一次的外环观测值*
 
 float err_ins;			//内环误差值
-float obs_ins			//内环观测值
+float obs_ins;			//内环观测值
 float exc_ins;			//内环期望值
 float out_ins;			//内环输出值	*
 	
@@ -37,7 +37,7 @@ float pid_control(float except,float current,float delta_T)
 
   /**----------------------------Extern Control----------------------------**/
 	err_ext	= exc_ext - obs_ext;					//求外环误差 
-	if(fabs(err_ext)<POS_DEAD)err_ext=0;			//死区
+	if(fabs(err_ext)<200)err_ext=0;				//死区
 	out_ext = err_ext * KP_EXT;						//求外环输出
   /**----------------------------------------------------------------------**/
   
@@ -48,13 +48,15 @@ float pid_control(float except,float current,float delta_T)
 	
   /**----------------------------Inside Control----------------------------**/
 	err_ins = exc_ins - obs_ins;					//求内环误差  														
-															
-	if(												//抗饱和积分
-	   ( (out_ins > PID_MAX)&&(err_ins > 0) ) || 
-	   ( (out_ins < PID_MIN)&&(err_ins < 0) ) )	 
-	{}
-	else 
-		integral_ins+=err_ins;
+	//if(fabs(err_ins)<300)err_ins=0;
+	
+//	if(																		//抗饱和积分
+//	   ( (out_ins > PID_MAX)&&(err_ins > 0) )||( (out_ins < PID_MIN)&&(err_ins < 0) ) )	 
+//	{
+//		printf("here! \r\n");												
+//	}
+//	else 
+	{integral_ins=integral_ins+err_ins;}
 	
 	#ifdef ENABLE_INTEGRAL_SEPARATING				//如果使能了积分分离
 	{
@@ -87,15 +89,8 @@ float pid_control(float except,float current,float delta_T)
 	obs_ext_last = obs_ext;							//保存本次外环观测值
 	
 	pid_out	= out_ins;
+	if((pid_out<22000)&&(pid_out>1500))pid_out=16000;
+	if((pid_out>-22000)&&(pid_out<-1500))pid_out=-16000;
+	if(fabs(pid_out)<=1500)pid_out=0;
 	return pid_out;
 }
-
-
-
-
-
-
-
-
-
-
