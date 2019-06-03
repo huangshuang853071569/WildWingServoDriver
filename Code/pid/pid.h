@@ -1,8 +1,8 @@
 /**-------------------------------------------------------------**/
-/**	File name :	pid.h											**/
-/** Author	  : Huangshuang										**/
-/**	Data	  :	2019/5/31										**/
-/** Version	  : V1.0											**/
+//*	File name :	pid.h											
+//* Author	  : Huangshuang										
+//*	Data	  	:	2019/5/31										
+//* Version	  : V1.0											
 /**-------------------------------------------------------------**/
 
 #ifndef _PID_H
@@ -28,8 +28,8 @@
 
 #define PID_MAX 			20000			//积分上限
 #define PID_MIN 			-20000		//积分下限
-#define ERR_TRD_INS 	500		//积分分离的误差阈值
-#define	POS_DEAD 			1		//误差死区
+#define ERR_TRD_INS 	500				//积分分离的误差阈值
+#define	POS_DEAD 			200					//误差死区
 
 float pid_control(float except,float current,float delta_T);
 #endif
