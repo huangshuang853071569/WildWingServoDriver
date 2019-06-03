@@ -1,18 +1,40 @@
 /**------------------------------------------------------------------**/
-/** File name ï¼š main.c                                              **/
-/** Author    : Huangshuang				             **/
-/** Data      : 2019/5/31				             **/
-/** Version   : V1.0				                     **/
+//* File name £º main.c                                              
+//* Author    : Huangshuang				             
+//* Data      : 2019/5/31				             
+//* Version   : V1.0				                     
 /**------------------------------------------------------------------**/
-
 #include "include.h"
 
-/**
-  * @breif main()
-  * @
-  * @
-  */
-int main()
+extern float except_pos;			//ÆÚÍûÎ»ÖÃ
+extern float current_pos;			//µ±Ç°Î»ÖÃ
+extern float PID_Contol_Out;	//pid¿ØÖÆÆ÷µÄ×îºóÊä³öÖµ
+extern float integral_ins;		//»ı·ÖÊıÖµ
+
+extern float PID_Control_Out;	//pid¿ØÖÆºóµÄÊä³öÖµ
+int main(void)
 {
-	return 0;
+	init();						//Ó²¼ş³õÊ¼»¯
+	
+	while(1)
+	{
+		data_process();	//ÊäÈëÊı¾İ´¦Àí
+		
+			
+		PID_Control_Out=pid_control(except_pos,current_pos,5);
+		
+		Motor_Control();			//PID¿ØÖÆ
+
+		delay_ms(1);
+
+	}		
 }
+
+/***Ïà¹ØÊı¾İ´òÓ¡***/
+/*
+	printf("%f \r\n",except_pos);												//ÆÚÍûÎ»ÖÃ
+	printf("%f \r\n",integral_ins);											//»ı·ÖÊıÖµ
+	printf("%f \r\n",current_pos);											//µ±Ç°Î»ÖÃ
+	printf("err = %f \r\n",except_pos-current_pos);			//Îó²î
+	printf("%f \r\n",PID_Contol_Out);										//PID×îºóÊä³öÖµ
+*/
