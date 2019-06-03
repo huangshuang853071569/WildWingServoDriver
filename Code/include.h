@@ -10,5 +10,10 @@
 
 #include "stm32f10x.h"
 #include "math.h"
+#include "init.h"
+#include "data_process.h"
+#include "usart.h"
+#include "PWM.h"
+#include "Motor.h"
 
 #endif
